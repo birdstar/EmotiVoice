@@ -17,6 +17,7 @@ import pyrubberband as pyrb
 from pydub import AudioSegment
 from yacs import config as CONFIG
 from config.joint.config import Config
+from fastapi.middleware.cors import CORSMiddleware
 
 LOGGER = logging.getLogger(__name__)
 
@@ -147,6 +148,17 @@ models = get_models()
 app = FastAPI()
 lexicon = read_lexicon(f"{ROOT_DIR}/lexicon/librispeech-lexicon.txt")
 g2p = G2p()
+
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type"],
+)
 
 from typing import Optional
 class SpeechRequest(BaseModel):
