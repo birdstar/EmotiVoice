@@ -194,8 +194,7 @@ def text_to_speech(speechRequest: SpeechRequest):
         wav_audio.frame_rate=config.sampling_rate
         buffer = io.BytesIO()
         # write to file system:
-        with open("/tmp/"+str(tmpFileName)+'.wav', 'wb') as file:
-            file.write(buffer.getvalue())
+        wav_audio.export("/tmp/"+str(tmpFileName)+'.wav', format="wav")
         wav_audio.export(buffer, format=response_format)
 
     return Response(content=buffer.getvalue(),
