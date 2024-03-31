@@ -202,7 +202,7 @@ def text_to_speech(speechRequest: SpeechRequest):
         url = 'https://43.135.163.166:8001/process/'+tmpFileName
         print(url)
         try:
-            response = requests.get(url)
+            response = requests.get(url, verify=False)
             if response.status_code == 200:
                 print("Request successful!")
                 print(response.text)  # 输出响应内容
