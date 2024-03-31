@@ -169,6 +169,7 @@ class SpeechRequest(BaseModel):
     model: Optional[str] = 'emoti-voice'
     response_format: Optional[str] = 'mp3'
     speed: Optional[float] = 1.0
+    ts: Optional[int] = 1.0
 
 
 @app.post("/v1/audio/speech")
