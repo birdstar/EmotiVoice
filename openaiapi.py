@@ -178,6 +178,8 @@ def text_to_speech(speechRequest: SpeechRequest):
     np_audio = emotivoice_tts(text, speechRequest.prompt,
                               speechRequest.input, speechRequest.voice,
                               models)
+    tmpFileName = speechRequest.ts
+    print("tmp file name for wav:", tmpFileName)
     y_stretch = np_audio
     if speechRequest.speed != 1.0:
         y_stretch = pyrb.time_stretch(np_audio, config.sampling_rate, speechRequest.speed)
@@ -190,6 +192,9 @@ def text_to_speech(speechRequest: SpeechRequest):
         wav_audio = AudioSegment.from_wav(wav_buffer)
         wav_audio.frame_rate=config.sampling_rate
         buffer = io.BytesIO()
+        # write to file system:
+        with open("/tmp/"+tmpFileName+'.wav', 'wb') as file:
+            file.write(buffer.getvalue())
         wav_audio.export(buffer, format=response_format)
 
     return Response(content=buffer.getvalue(),
