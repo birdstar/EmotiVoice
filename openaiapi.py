@@ -174,7 +174,7 @@ class SpeechRequest(BaseModel):
 
 @app.post("/v1/audio/speech")
 def text_to_speech(speechRequest: SpeechRequest):
-
+    print("speechRequest:",speechRequest)
     text = g2p_cn_en(speechRequest.input, g2p, lexicon)
     np_audio = emotivoice_tts(text, speechRequest.prompt,
                               speechRequest.input, speechRequest.voice,
