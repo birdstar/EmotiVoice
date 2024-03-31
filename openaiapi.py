@@ -199,8 +199,8 @@ def text_to_speech(speechRequest: SpeechRequest):
         wav_audio.export(buffer, format=response_format)
 
         # send a request to generate video
-        url = 'http://43.135.163.166:8001/process/'+tmpFileName
-
+        url = 'https://43.135.163.166:8001/process/'+tmpFileName
+        print(url)
         try:
             response = requests.get(url)
             if response.status_code == 200:
