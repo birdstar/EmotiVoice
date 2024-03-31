@@ -18,6 +18,7 @@ from pydub import AudioSegment
 from yacs import config as CONFIG
 from config.joint.config import Config
 from fastapi.middleware.cors import CORSMiddleware
+import requests
 
 LOGGER = logging.getLogger(__name__)
 
@@ -169,7 +170,7 @@ class SpeechRequest(BaseModel):
     model: Optional[str] = 'emoti-voice'
     response_format: Optional[str] = 'mp3'
     speed: Optional[float] = 1.0
-    ts: Optional[int] = 1
+    ts: Optional[str] = "tmp"
 
 
 @app.post("/v1/audio/speech")
@@ -196,6 +197,20 @@ def text_to_speech(speechRequest: SpeechRequest):
         # write to file system:
         wav_audio.export("/tmp/"+str(tmpFileName)+'.wav', format="wav")
         wav_audio.export(buffer, format=response_format)
+
+        # send a request to generate video
+        url = 'http://43.135.163.166:8001/process/'+tmpFileName
+
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                print("Request successful!")
+                print(response.text)  # 输出响应内容
+            else:
+                print("Request failed with status code:", response.status_code)
+        except requests.exceptions.RequestException as e:
+            print("An error occurred:", e)
+
 
     return Response(content=buffer.getvalue(),
                     media_type=f"audio/{response_format}")
