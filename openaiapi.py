@@ -199,17 +199,24 @@ def text_to_speech(speechRequest: SpeechRequest):
         wav_audio.export(buffer, format=response_format)
 
         # send a request to generate video
-        url = 'https://43.135.163.166:8001/process/'+tmpFileName
-        print(url)
-        try:
-            response = requests.get(url, verify=False)
-            if response.status_code == 200:
-                print("Request successful!")
-                print(response.text)  # 输出响应内容
-            else:
-                print("Request failed with status code:", response.status_code)
-        except requests.exceptions.RequestException as e:
-            print("An error occurred:", e)
+        # url = 'https://43.135.163.166:8001/process/'+tmpFileName
+        # print(url)
+        # try:
+        #     response = requests.get(url, verify=False)
+        #     if response.status_code == 200:
+        #         print("Request successful!")
+        #         print(response.text)  # 输出响应内容
+        #     else:
+        #         print("Request failed with status code:", response.status_code)
+        # except requests.exceptions.RequestException as e:
+        #     print("An error occurred:", e)
+
+        url = "https://40.73.97.134:58001/upload/"  # 你的 FastAPI 服务端地址
+        file_path = "/tmp/"+str(tmpFileName)+'.wav'
+
+        files = {"file": open(file_path, "rb")}
+        response = requests.post(url, files=files, verify=False, timeout=60)
+        print(response)
 
 
     return Response(content=buffer.getvalue(),
