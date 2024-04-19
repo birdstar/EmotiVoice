@@ -155,10 +155,15 @@ origins = [
 ]
 
 app.add_middleware(
+    # CORSMiddleware,
+    # allow_origins=origins,
+    # allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    # allow_headers=["Content-Type"],
     CORSMiddleware,
     allow_origins=origins,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["Content-Type"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 from typing import Optional
