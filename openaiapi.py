@@ -216,13 +216,13 @@ def text_to_speech(speechRequest: SpeechRequest):
         # except requests.exceptions.RequestException as e:
         #     print("An error occurred:", e)
 
-        url = "https://40.73.97.134:58001/upload/"  # 你的 FastAPI 服务端地址
-        file_path = "/tmp/"+str(tmpFileName)+'.wav'
-
-        files = {"file": open(file_path, "rb")}
-        response = requests.post(url, files=files, verify=False, timeout=60)
-        print(response)
-
-
+        try:
+            url = "https://40.73.97.134:58001/upload/"  # 你的 FastAPI 服务端地址
+            file_path = "/tmp/"+str(tmpFileName)+'.wav'
+            files = {"file": open(file_path, "rb")}
+            response = requests.post(url, files=files, verify=False, timeout=60)
+            print(response)
+        except Exception as e:
+            print(e)
     return Response(content=buffer.getvalue(),
                     media_type=f"audio/{response_format}")
