@@ -217,7 +217,8 @@ def text_to_speech(speechRequest: SpeechRequest):
         #     print("An error occurred:", e)
 
         try:
-            url = "https://40.73.97.134:58001/upload/"  # 你的 FastAPI 服务端地址
+            # url = "https://40.73.97.134:58001/upload/"  # 你的 FastAPI 服务端地址
+            url = "https://43.135.132.119:8001/upload/"
             file_path = "/tmp/"+str(tmpFileName)+'.wav'
             files = {"file": open(file_path, "rb")}
             response = requests.post(url, files=files, verify=False, timeout=60)
